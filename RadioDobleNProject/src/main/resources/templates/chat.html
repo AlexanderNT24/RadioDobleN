@@ -1,0 +1,394 @@
+<div id="chat" class="row">
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    function modalEdit() {
+        console.log('carga')
+      const exampleModal = document.getElementById("exampleModal1");
+      exampleModal.addEventListener("show.bs.modal", (event) => {
+        const button = event.relatedTarget;
+
+        //const recipient = button.getAttribute('data-bs-whatever')
+        const id = button.getAttribute("data-bs-id");
+
+        const ip = button.getAttribute("data-bs-ip");
+        const nombre = button.getAttribute("data-bs-nombre");
+        const tipo = button.getAttribute("data-bs-tipo");
+        const contenido = button.getAttribute("data-bs-contenido");
+        console.log(ip)
+        console.log(nombre)
+        console.log(tipo)
+        console.log(contenido)
+        //const modalTitle = exampleModal.querySelector('.modal-title')
+        //const modalBodyInput = exampleModal.querySelector('.modal-body input')
+        const campoId = document.getElementById("idModal");
+
+        const campoNombre = document.getElementById("nombreModal");
+        const campoIp = document.getElementById("ipModal");
+        const campoTipo = document.getElementById("tipoModal");
+        const campoContenido = document.getElementById("contenidoModal");
+        //modalTitle.textContent = `New message to ${recipient}`
+        //modalBodyInput.value = recipient
+        campoId.value = id;
+        campoNombre.value = nombre;
+        campoIp.value = ip;
+        campoTipo.value = tipo;
+        campoContenido.value = contenido;
+      });
+    }
+
+    function Eliminar(opcion) {
+      event.preventDefault();
+      Swal.fire({
+        title: "Deseas Eliminar?",
+        text: "Una vez Eliminado no se podra recuperar!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, Eliminar!",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Eliminado!",
+            text: "Comentario eliminado del registro.",
+            icon: "success",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.href = opcion.href;
+            }
+          });
+        }
+      });
+    }
+    function Actualizar() {
+      event.preventDefault();
+
+      Swal.fire({
+        title: "Quieres modificar este registro?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Guardar",
+        denyButtonText: `No guardar`,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Guardado!",
+            text: "",
+            icon: "success",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              const formulario = document.getElementById("actualizar");
+              formulario.submit();
+            }
+          });
+        } else if (result.isDenied) {
+          Swal.fire("El registro no se actualizará", "", "info");
+        }
+      });
+    }
+    const URL_API = "https://api.ipify.org/?format=json";
+    fetch(URL_API)
+      .then((respuestaRaw) => respuestaRaw.json())
+      .then((respuesta) => {
+        document.getElementById("ip").value = respuesta.ip;
+      });
+  </script>
+
+  <body onload="modalEdit()">
+    <center>
+      <div class="overflow" style="overflow-y: scroll">
+        <div class="col" id="mensajes">
+          <div class="card">
+            <h5 class="card-header">Mensajes En Linea</h5>
+            <nav class="navbar navbar-expand-lg bg-light">
+              <div class="container-fluid">
+                <button
+                  class="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div
+                  class="collapse navbar-collapse"
+                  id="navbarSupportedContent"
+                >
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      >
+                        <i class="bx bx-message-square-add"></i>
+                      </button>
+                    </li>
+                  </ul>
+                  <form class="d-flex" role="search">
+                    <select name="tipo" id="tipo" class="form-control search">
+                      <option value="" disabled="disabled" selected="selected">
+                        Filtro
+                      </option>
+                      <option value="Saludos">Saludos</option>
+                      <option value="Comentario">Comentario</option>
+                      <option value="Pregunta">Pregunta</option>
+                    </select>
+                  </form>
+                  <form class="d-flex" role="search">
+                    <input
+                      id="ruta"
+                      class="form-control search"
+                      type="search"
+                      placeholder="Descripcion"
+                      aria-label="Buscar"
+                    />
+                    <button
+                      class="btn btn-success"
+                      type="button"
+                      onclick="search()"
+                    >
+                      Buscar
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </nav>
+
+            <div
+              class="card-body msg_card_body"
+              style="
+                height: 480px;
+                overflow-y: scroll;
+                border-radius: 15px !important;
+                background-color: rgba(0, 0, 0, 0.4) !important;
+              "
+            >
+              <div th:each="comentario,status : ${comentarios}">
+                <div class="d-flex justify-content-start mb-4">
+                  <div class="img_cont_msg">
+                    <span
+                      class="rounded-circle user_img_msg"
+                      th:text="${comentario.nombre[0]}"
+                    ></span>
+                  </div>
+                  <div
+                    class="msg_cotainer"
+                    th:text="${comentario.contenido}"
+                  ></div>
+                  <div
+                    style="
+                      position: relative;
+                      top: 40px;
+                      left: -40px;
+                      bottom: -15px;
+                      color: rgba(255, 255, 255, 0.5);
+                      font-size: 10px;
+                    "
+                  >
+                  <p th:text=" ${status.count}+ ',' +${comentario.tipo}"></p>
+
+                    <a
+                      onclick="return Eliminar(this)"
+                      th:href="@{/eliminarComentario(id=${comentario.id})}"
+                      class="btn btn-danger"
+                    >
+                      <i class="bx bx-trash"></i>
+                    </a>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal1"
+                      th:attr="data-bs-id=${comentario.id},data-bs-ip=${comentario.ipUser},data-bs-tipo=${comentario.tipo},data-bs-nombre=${comentario.nombre},data-bs-contenido=${comentario.contenido}"
+                    >
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </center>
+
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Crear comentario</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="/" method="post">
+              <div class="card">
+                <div class="margin-bottom:10px;">
+                  <div class="margin-bottom:10px;">
+                    <label>Ip:</label>
+                    <input
+                      name="ip"
+                      id="ip"
+                      class="form-control me-2"
+                      readonly
+                    />
+                  </div>
+                  <label>Tipo de Comentario:</label>
+                  <select name="tipo" class="form-control" required="required">
+                    <option value="Saludos">Saludos</option>
+                    <option value="Comentario">Comentario</option>
+                    <option value="Pregunta">Pregunta</option>
+                  </select>
+                </div>
+                <div class="margin-bottom:10px;">
+                  <label>Nombre:</label>
+                  <input
+                    name="nombre"
+                    class="form-control me-2"
+                    placeholder="Ingresa nombre"
+                  />
+                </div>
+                <div class="margin-bottom:10px;">
+                  <label>Descripción:</label>
+                  <textarea
+                    name="contenido"
+                    placeholder="Ingresa mensaje"
+                    class="form-control"
+                    aria-label="With textarea"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  style="width: 100%"
+                  class="btn btn-outline-success"
+                  type="submit"
+                >
+                  Guardar <i class="bx bxs-send"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL -->
+    <div
+      class="modal fade"
+      id="exampleModal1"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">
+              <i class="bi bi-file-earmark-arrow-up-fill"></i
+              ><b> Editar Comentario </b> <i class="bi bi-menu-up"></i>
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form action="editarComentario" method="POST" id="actualizar">
+            <div class="modal-body">
+              <input name="id" id="idModal" required="required" />
+
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  ><b>Ip: </b></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="ip"
+                  id="ipModal"
+                  required="required"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  ><b>Tipo: </b></label
+                >
+                <input
+                  class="form-control"
+                  name="tipo"
+                  id="tipoModal"
+                  required="required"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  ><b>Nombre: </b></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="nombre"
+                  id="nombreModal"
+                  required="required"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  ><b>Contenido: </b></label
+                >
+                <textarea
+                  type="number"
+                  class="form-control"
+                  name="contenido"
+                  id="contenidoModal"
+                  required="required"
+                ></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                data-bs-dismiss="modal"
+              >
+                <i class="bi bi-unlock-fill"></i><b> Cerrar</b>
+              </button>
+              <button
+                onclick="return Actualizar()"
+                class="btn btn-outline-danger"
+              >
+                <i class="bi bi-arrow-up-right-square-fill"></i
+                ><b> Actualizar</b>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</div>
