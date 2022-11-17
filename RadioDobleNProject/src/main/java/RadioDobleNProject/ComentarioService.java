@@ -34,6 +34,14 @@ public class ComentarioService implements IComentarioService {
     public List<Comentario> Buscar(String dato) {
        return data.buscarPorTodo(dato);
     }
+    @Override
+    public List<Comentario> BuscarComentarioTipo(String dato) {
+        return data.buscarPorTipo(dato);
+    }
+    @Override
+    public List<Comentario> BuscarComentarioIp(String dato) {
+        return data.buscarPorIp(dato);
+    }
     
     @Override
     public List<Comentario> ListarAs() {

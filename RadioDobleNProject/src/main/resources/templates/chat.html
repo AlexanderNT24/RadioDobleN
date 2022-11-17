@@ -100,6 +100,7 @@
       .then((respuestaRaw) => respuestaRaw.json())
       .then((respuesta) => {
         document.getElementById("ip").value = respuesta.ip;
+        document.getElementById("ipBus").value = respuesta.ip;
       });
   </script>
 
@@ -138,8 +139,19 @@
                       </button>
                     </li>
                   </ul>
-                  <form class="d-flex" role="search">
-                    <select name="tipo" id="tipo" class="form-control search">
+                  <form action="buscarComentarioIp" method="POST">
+                    <input type="hidden" id="ipBus" name="dato">
+                    <button
+                            class="btn btn-success"
+                            type="submit"
+                    >
+                      <i class='bx bxs-user'></i> Mis comentarios
+                    </button>
+                    </a>
+                  </form>
+
+                  <form action="buscarComentarioTipo" method="POST" id="filtro" class="d-flex" role="search">
+                    <select onchange="document.getElementById('filtro').submit()" name="dato" id="tipo" class="form-control search">
                       <option value="" disabled="disabled" selected="selected">
                         Filtro
                       </option>
@@ -148,9 +160,10 @@
                       <option value="Pregunta">Pregunta</option>
                     </select>
                   </form>
-                  <form class="d-flex" role="search">
+                  <form action="buscarComentario" method="POST" id="busqueda" class="d-flex" role="search">
                     <input
-                      id="ruta"
+                      id="valor",
+                      name="dato"
                       class="form-control search"
                       type="search"
                       placeholder="Descripcion"
@@ -158,8 +171,7 @@
                     />
                     <button
                       class="btn btn-success"
-                      type="button"
-                      onclick="search()"
+                      type="submit"
                     >
                       Buscar
                     </button>
@@ -178,7 +190,7 @@
               "
             >
               <div th:each="comentario,status : ${comentarios}">
-                <div class="d-flex justify-content-start mb-4">
+                <div data-aos="fade-down" class="d-flex justify-content-start mb-4">
                   <div class="img_cont_msg">
                     <span
                       class="rounded-circle user_img_msg"
@@ -199,24 +211,29 @@
                       font-size: 10px;
                     "
                   >
-                  <p th:text=" ${status.count}+ ',' +${comentario.tipo}"></p>
+                  <p th:text=" ${status.count}+ ',' +${comentario.tipo}">
 
-                    <a
-                      onclick="return Eliminar(this)"
-                      th:href="@{/eliminarComentario(id=${comentario.id})}"
-                      class="btn btn-danger"
-                    >
-                      <i class="bx bx-trash"></i>
-                    </a>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal1"
-                      th:attr="data-bs-id=${comentario.id},data-bs-ip=${comentario.ipUser},data-bs-tipo=${comentario.tipo},data-bs-nombre=${comentario.nombre},data-bs-contenido=${comentario.contenido}"
-                    >
-                      <i class="bi bi-pencil-fill"></i>
-                    </button>
+
+                  </p>
+
+       <div>
+         <a
+                 onclick="return Eliminar(this)"
+                 th:href="@{/eliminarComentario(id=${comentario.id})}"
+                 class="btn btn-danger"
+         >
+           <i class="bx bx-trash"></i>
+         </a>
+         <button
+                 type="button"
+                 class="btn btn-primary"
+                 data-bs-toggle="modal"
+                 data-bs-target="#exampleModal1"
+                 th:attr="data-bs-id=${comentario.id},data-bs-ip=${comentario.ipUser},data-bs-tipo=${comentario.tipo},data-bs-nombre=${comentario.nombre},data-bs-contenido=${comentario.contenido}"
+         >
+           <i class='bx bx-upvote'></i>
+         </button>
+       </div>
                   </div>
                 </div>
               </div>
@@ -249,12 +266,11 @@
               <div class="card">
                 <div class="margin-bottom:10px;">
                   <div class="margin-bottom:10px;">
-                    <label>Ip:</label>
                     <input
                       name="ip"
                       id="ip"
                       class="form-control me-2"
-                      readonly
+                      type="hidden"
                     />
                   </div>
                   <label>Tipo de Comentario:</label>
@@ -320,30 +336,21 @@
           </div>
           <form action="editarComentario" method="POST" id="actualizar">
             <div class="modal-body">
-              <input name="id" id="idModal" required="required" />
-
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label"
-                  ><b>Ip: </b></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="ip"
-                  id="ipModal"
-                  required="required"
-                />
-              </div>
+              <input type="hidden" name="id" id="idModal" required="required" />
+              <input name="ip" id="ipModal" required="required" type="hidden"/>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label"
                   ><b>Tipo: </b></label
                 >
-                <input
-                  class="form-control"
-                  name="tipo"
-                  id="tipoModal"
-                  required="required"
-                />
+                <select class="form-control"
+                        name="tipo"
+                        id="tipoModal"
+                        required="required">
+                  <option value="Saludos">Saludos</option>
+                  <option value="Comentario">Comentario</option>
+                  <option value="Pregunta">Pregunta</option>
+                </select>
+
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label"
