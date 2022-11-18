@@ -41,7 +41,7 @@ public class ControladorIndex {
             service.Guardar(c);
             return "redirect:/";
         }
-        return "a";
+        return "redirect:/";
 
 
     }
@@ -55,7 +55,7 @@ public class ControladorIndex {
         Iterator<String> iterador = groserias.iterator();
         while(iterador.hasNext()){
             String elemento = iterador.next();
-            if(elemento.equals(comentario))
+            if(elemento.contains(comentario))
                 return false;
         }
 
@@ -119,5 +119,10 @@ public class ControladorIndex {
 
         return "galeria";
     }
+    @GetMapping("/patrocinadores")
+    public String Patrocinadores(Model model)
+    {
 
+        return "patrocinadores";
+    }
 }
