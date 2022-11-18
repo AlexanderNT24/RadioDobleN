@@ -64,7 +64,7 @@
 
             <div class="card-body msg_card_body" style="height: 480px;overflow-y: scroll;border-radius: 15px !important;background-color: rgba(0, 0, 0, 0.4) !important;">
               <div th:each="comentario,status : ${comentarios}">
-                <div data-aos="fade-down" class="d-flex justify-content-start mb-4">
+                <div class="d-flex justify-content-start mb-4">
                   <div class="img_cont_msg">
                     <span
                       class="rounded-circle user_img_msg"
@@ -92,25 +92,25 @@
 
             </div>
             <div class="card-footer" id="mensajeria">
+              <div class="margin-bottom:10px;">
               <form action="/" method="post">
-                <div class="margin-bottom:10px;">
-                  <div class="margin-bottom:10px;">    
-                      <input
-                              name="ip"
-                              id="ip"
-                              class="form-control me-2"
-                              type="hidden"
-                      />
-                  </div>
-                  <label>Tipo de Comentario:</label>
+                <input name="ip" id="ip" class="form-control"  type="hidden"/>
+                <div class="input-group">
                   <select name="tipo" class="form-control" required="required">
-                      <option value="Saludos">Saludos</option>
-                      <option value="Comentario">Comentario</option>
-                      <option value="Pregunta">Pregunta</option>
+                    <option value="Saludos">Saludos</option>
+                    <option value="Comentario">Comentario</option>
+                    <option value="Pregunta">Pregunta</option>
                   </select>
-                  <input name="nombre"
-                  class="form-control me-2"
-                  placeholder="Ingresa nombre"/>
+                  <input name="nombre" class="form-control" placeholder="Ingresa nombre"/>
+
+
+
+
+                </div>
+
+
+
+
               </div>
               <div class="margin-bottom:10px;">
 

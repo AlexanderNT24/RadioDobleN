@@ -26,12 +26,15 @@ public class ControladorAdmin {
         List<Comentario> comentarios = service.Listar();
         model.addAttribute("comentarios",comentarios);
 
-        return "admin";
+        return "redirect:/admin/tableAdmin";
     }
 
     @GetMapping("/admin/tableAdmin")
     public String IndexAdminTable(Model model)
     {
+        List<Comentario> comentarios = service.Listar();
+        model.addAttribute("comentarios",comentarios);
+
         return "admin";
     }
     @PostMapping("/admin/editarComentario")
@@ -50,13 +53,13 @@ public class ControladorAdmin {
         c.setContenido(contenido);
         service.Guardar(c);
 
-        return "redirect:/admin";
+        return "redirect:/admin/tableAdmin";
     }
     @GetMapping("/admin/eliminarComentario")
     public String EliminarComentario(@RequestParam("id") int id)
     {
         service.Eliminar(id);
-        return "redirect:/admin";
+        return "redirect:/admin/tableAdmin";
     }
     @PostMapping("/admin/buscarComentarioTipo")
     public String BuscarComentarioTipoAdmin(@RequestParam("dato") String dato, Model model)
@@ -65,27 +68,28 @@ public class ControladorAdmin {
             System.out.println(dato);
             List<Comentario> comentarios = service.BuscarComentarioTipo(dato);
             model.addAttribute("comentarios",comentarios);
-            return "index";
+            return "admin";
 
         } catch (Exception e) {
-            return "index";
+            return "admin";
 
         }
 
     }
-    @PostMapping("/admin/buscarComentarioIp")
-    public String BuscarComentarioIpAdmin(@RequestParam("dato") String dato, Model model)
+    @PostMapping("/admin/buscarComentario")
+    public String BuscarComentario(@RequestParam("dato") String dato, Model model)
     {
         try {
             System.out.println(dato);
-            List<Comentario> comentarios = service.BuscarComentarioIp(dato);
+            List<Comentario> comentarios = service.Buscar(dato);
             model.addAttribute("comentarios",comentarios);
-            return "index";
+            return "admin";
 
         } catch (Exception e) {
-            return "index";
+            return "admin";
 
         }
 
     }
+
 }

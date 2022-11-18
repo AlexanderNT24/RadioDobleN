@@ -1,6 +1,12 @@
 <div th:insert="layout :: #principal"></div>
-
-<div id="chat" class="row">
+<ul class="nav justify-content-end">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/admin/tableAdmin">Comentarios</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/admin/publicidad">Publicidad</a>
+    </li>
+</ul>
 
     <script>
         function modalEdit() {
@@ -111,7 +117,7 @@
         <div class="overflow" style="overflow-y: scroll">
             <div class="col" id="mensajes">
                 <div class="card">
-                    <h5 class="card-header">Mensajes En Linea</h5>
+                    <h5 class="card-header">Gestión de mensajes</h5>
                     <nav class="navbar navbar-expand-lg bg-light">
                         <div class="container-fluid">
                             <button
@@ -132,7 +138,7 @@
 
 
 
-                                <form action="admin/buscarComentarioTipo" method="POST" id="filtro" class="d-flex" role="search">
+                                <form action="buscarComentarioTipo" method="POST" id="filtro" class="d-flex" role="search">
                                     <select onchange="document.getElementById('filtro').submit()" name="dato" id="tipo" class="form-control search">
                                         <option value="" disabled="disabled" selected="selected">
                                             Filtro
@@ -142,7 +148,7 @@
                                         <option value="Pregunta">Pregunta</option>
                                     </select>
                                 </form>
-                                <form action="admin/buscarComentario" method="POST" id="busqueda" class="d-flex" role="search">
+                                <form action="buscarComentario" method="POST" id="busqueda" class="d-flex" role="search">
                                     <input
                                             id="valor",
                                             name="dato"
@@ -239,7 +245,7 @@
                             aria-label="Close"
                     ></button>
                 </div>
-                <form action="admin/editarComentario" method="POST" id="actualizar">
+                <form action="editarComentario" method="POST" id="actualizar">
                     <div class="modal-body">
                         <input type="hidden" name="id" id="idModal" required="required" />
                         <input name="ip" id="ipModal" required="required" type="hidden"/>

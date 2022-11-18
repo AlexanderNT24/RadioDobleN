@@ -14,7 +14,107 @@
     <script>
         AOS.init();
     </script>
-    <link rel="stylesheet" href="styles.css" />
+    <style>
+        body, nav, .offcanvas,.modal-content,.card{
+            background-color: #1E1083;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3CradialGradient id='a' cx='0' cy='800' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23110867'/%3E%3Cstop offset='1' stop-color='%23110867' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='b' cx='1200' cy='800' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%230f0842'/%3E%3Cstop offset='1' stop-color='%230f0842' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='c' cx='600' cy='0' r='600' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23040125'/%3E%3Cstop offset='1' stop-color='%23040125' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='d' cx='600' cy='800' r='600' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%231E1083'/%3E%3Cstop offset='1' stop-color='%231E1083' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='e' cx='0' cy='0' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23080249'/%3E%3Cstop offset='1' stop-color='%23080249' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='f' cx='1200' cy='0' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23000000'/%3E%3Cstop offset='1' stop-color='%23000000' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='1200' height='800'/%3E%3Crect fill='url(%23b)' width='1200' height='800'/%3E%3Crect fill='url(%23c)' width='1200' height='800'/%3E%3Crect fill='url(%23d)' width='1200' height='800'/%3E%3Crect fill='url(%23e)' width='1200' height='800'/%3E%3Crect fill='url(%23f)' width='1200' height='800'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+            background-size: cover;
+            color:#ffff
+        }
+
+        .cardAmp:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+        }
+        .botonWtsp {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            line-height: 63px;
+            bottom: 25px;
+            right: 25px;
+            background: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 35px;
+            box-shadow: 0px 1px 10px rgba(0,0,0,0.3);
+            z-index: 100;
+            transition: all 300ms ease;
+        }
+
+        .botonWtsp:hover {
+            background: #20ba5a;
+        }
+        .logo-image{
+            width: 46px;
+            height: 46px;
+
+            overflow: hidden;
+            margin-top: -6px;
+        }
+
+        .search{
+            border-radius: 15px 0 0 15px !important;
+            background-color: rgba(0,0,0,0.3) !important;
+            border:0 !important;
+            color:white !important;
+        }
+        .search:focus{
+            box-shadow:none !important;
+            outline:0px !important;
+        }
+
+
+
+        .user_img_msg{
+            height: 40px;
+            width: 40px;
+
+            background: #ffffff;
+            color: rgb(0, 0, 0);
+            padding: 5px 20px;
+            border-radius: 50%;
+            font-size: 30px;
+
+        }
+
+
+        .msg_cotainer{
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 10px;
+            border-radius: 25px;
+            background-color: #82ccdd;
+            padding: 10px;
+            position: relative;
+        }
+        .msg_time{
+            position: absolute;
+            left: 0;
+            bottom: -15px;
+            color: rgba(255,255,255,0.5);
+            font-size: 10px;
+        }
+        .cardAmp:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffffff;
+            border-radius: 10px;
+        }.navbar {
+
+         }
+
+    </style>
       <nav class="navbar navbar-expand-lg bg-light">
         
         <div class="container-fluid">
@@ -50,14 +150,12 @@
               </li>
     
               <li class="nav-item">
-                <a class="nav-link" style="color: #ffff;" href="/patrocinadores"><i class='bx bxs-news' ></i> Patrocinadores</a>
+                <a class="nav-link" style="color: #ffff;" href="/publicidad"><i class='bx bx-happy-beaming'></i> Publicidad</a>
               </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: #ffff;" href="/admin"><i class='bx bxs-user-account'></i> Admin</a>
-                </li>
             </ul>
             <li class="d-flex">
-              <audio controls="controls"> </audio> 
+                <a class="nav-link" style="color: #ffff;" href="/admin"><i class='bx bxs-user-account'></i> Admin</a>
+
             </li>
           </div>
         </div>

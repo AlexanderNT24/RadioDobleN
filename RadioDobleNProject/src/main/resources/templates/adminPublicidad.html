@@ -1,0 +1,271 @@
+<div th:insert="layout :: #principal"></div>
+<ul class="nav justify-content-end">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/admin/tableAdmin">Comentarios</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/admin/publicidad">Publicidad</a>
+    </li>
+</ul>
+
+<script>
+    function modalEdit() {
+        console.log('carga')
+        const exampleModal = document.getElementById("exampleModal1");
+        exampleModal.addEventListener("show.bs.modal", (event) => {
+            const button = event.relatedTarget;
+            //const recipient = button.getAttribute('data-bs-whatever')
+            const id = button.getAttribute("data-bs-id");
+            const empresa = button.getAttribute("data-bs-empresa");
+            const lema = button.getAttribute("data-bs-lema");
+            const imagenUrl = button.getAttribute("data-bs-imagenUrl");
+            const coste = button.getAttribute("data-bs-coste");
+
+            const campoId = document.getElementById("idModal");
+            const campoEmpresa = document.getElementById("empresaModal");
+            const campoLema = document.getElementById("lemaModal");
+            const campoImagen = document.getElementById("imagenModal");
+            const campoCoste = document.getElementById("costeModal");
+            //modalTitle.textContent = `New message to ${recipient}`
+            //modalBodyInput.value = recipient
+            console.log(imagenUrl)
+            campoId.value = id;
+            campoEmpresa.value =empresa;
+            campoLema.value =lema;
+            campoImagen.value =imagenUrl;
+            campoCoste.value =coste;
+
+        });
+    }
+
+    function Eliminar(opcion) {
+        event.preventDefault();
+        Swal.fire({
+            title: "Deseas Eliminar?",
+            text: "Una vez Eliminado no se podra recuperar!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, Eliminar!",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Eliminado!",
+                    text: "Comentario eliminado del registro.",
+                    icon: "success",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.href = opcion.href;
+                    }
+                });
+            }
+        });
+    }
+    function Actualizar() {
+        event.preventDefault();
+
+        Swal.fire({
+            title: "Quieres modificar este registro?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Guardar",
+            denyButtonText: `No guardar`,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Guardado!",
+                    text: "",
+                    icon: "success",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const formulario = document.getElementById("actualizar");
+                        formulario.submit();
+                    }
+                });
+            } else if (result.isDenied) {
+                Swal.fire("El registro no se actualizará", "", "info");
+            }
+        });
+    }
+
+</script>
+
+<body onload="modalEdit()">
+
+
+<div class="container">
+    <h5 class="card-header">Gestión publicitaria</h5>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Registrar
+            </button>
+        </div>
+    </nav>
+    <div style="overflow-y: scroll;">
+        <table class="table" style=" background-color: rgba(210,130,240, 0.3) !important; color: white;">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Empresa</th>
+                <th scope="col">Lema</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Coste</th>
+                <th scope="col">Opciones</th>
+            </tr>
+            <tbody th:each="publicidad,status : ${publicidades}">
+            <tr>
+                <th th:text="${publicidad.id}"></th>
+                <th th:text="${publicidad.empresa}"></th>
+                <th th:text="${publicidad.lema}"></th>
+                <td th:text="${publicidad.imagenUrl}" ></td>
+                <td th:text="${publicidad.coste}"></td>
+                <td>
+                    <a onclick="return Eliminar(this)" th:href="@{/admin/eliminarPublicidad(id=${publicidad.id})}" class="btn btn-danger">
+                    <i class="bx bx-trash"></i></a>
+                    <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal1"
+                            th:attr="data-bs-id=${publicidad.id},data-bs-empresa=${publicidad.empresa},data-bs-lema=${publicidad.lema},data-bs-imagenUrl=${publicidad.imagenUrl},data-bs-coste=${publicidad.coste}"
+                    >
+                        <i class='bx bx-upvote'></i>
+                    </button>
+                </td>
+            </tr>
+
+            </tbody>
+            <tr>
+                <th>Total:</th>
+
+
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+<!-- MODAL -->
+<div
+        class="modal fade"
+        id="exampleModal1"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel1"
+        aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">
+                    <i class="bi bi-file-earmark-arrow-up-fill"></i
+                    ><b> Editar Publicidad </b> <i class="bi bi-menu-up"></i>
+                </h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
+            </div>
+            <form action="/admin/editarPublicidad" method="POST" id="actualizar">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="idModal" required="required" />
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Empresa</label>
+                        <input id="empresaModal" name="empresa" type="text" class="form-control" placeholder="Empresa">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput2" class="form-label">Lema</label>
+                        <input id="lemaModal" name="lema" type="text" class="form-control" placeholder="Lema">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput3" class="form-label">Imagen</label>
+                        <input id="imagenModal"  name="imagen" type="text" class="form-control" placeholder="Url">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput4" class="form-label">Coste</label>
+                        <input id="costeModal" name="coste" type="number" class="form-control" placeholder="Coste">
+                    </div>
+                <div class="modal-footer">
+                    <button
+                            type="button"
+                            class="btn btn-outline-dark"
+                            data-bs-dismiss="modal"
+                    >
+                        <i class="bi bi-unlock-fill"></i><b> Cerrar</b>
+                    </button>
+                    <button
+                            onclick="return Actualizar()"
+                            class="btn btn-outline-danger"
+                    >
+                        <i class="bi bi-arrow-up-right-square-fill"></i
+                        ><b> Actualizar</b>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva publicidad</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/admin/publicidad">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Empresa</label>
+                    <input name="empresa" type="text" class="form-control" placeholder="Empresa">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput2" class="form-label">Lema</label>
+                    <input name="lema" type="text" class="form-control" placeholder="Lema">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput3" class="form-label">Imagen</label>
+                    <input name="imagen" type="url" class="form-control" placeholder="Url">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput4" class="form-label">Coste</label>
+                    <input name="coste" type="number" class="form-control" placeholder="Coste">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

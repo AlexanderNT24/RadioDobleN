@@ -1,0 +1,17 @@
+<div th:insert="layout :: #principal"></div>
+<div class="container text-center">
+    <div class="row">
+        <div class="col" th:each="publicidad,status : ${publicidades}">
+            <div>
+                <div class="card mb-3">
+                    <img  th:src="${publicidad.imagenUrl}" class="card-img-top img-thumbnail" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${publicidad.empresa}"></h5>
+                        <p class="card-text" th:text="${publicidad.lema}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
