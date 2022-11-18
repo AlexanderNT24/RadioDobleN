@@ -107,6 +107,10 @@
     <h5 class="card-header">Gestión publicitaria</h5>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
+            <div>
+                <a class="btn btn-info" th:href="@{/listarPublicidadAs}" type="submit">↑</a>
+                <a class="btn btn-warning" th:href="@{/listarPublicidadDes}" type="submit">↓</a>
+            </div>
             <button
                     class="navbar-toggler"
                     type="button"
@@ -135,7 +139,8 @@
                 <th scope="col">Coste</th>
                 <th scope="col">Opciones</th>
             </tr>
-            <tbody th:each="publicidad,status : ${publicidades}">
+            <tbody>
+        <div th:each="publicidad,status : ${publicidades}">
             <tr>
                 <th th:text="${publicidad.id}"></th>
                 <th th:text="${publicidad.empresa}"></th>
@@ -144,7 +149,7 @@
                 <td th:text="${publicidad.coste}"></td>
                 <td>
                     <a onclick="return Eliminar(this)" th:href="@{/admin/eliminarPublicidad(id=${publicidad.id})}" class="btn btn-danger">
-                    <i class="bx bx-trash"></i></a>
+                        <i class="bx bx-trash"></i></a>
                     <button
                             type="button"
                             class="btn btn-primary"
@@ -156,10 +161,20 @@
                     </button>
                 </td>
             </tr>
+        </div>
+
 
             </tbody>
             <tr>
-                <th>Total:</th>
+                <div th:each="publicidades,status : ${reporte}">
+                    <th>Total:</th>
+                    <th th:text="${publicidades.id}"></th>
+                    <th></th>
+                    <th></th>
+                    <th th:text="${publicidades.coste}"></th>
+                    <th></th>
+
+                </div>
 
 
             </tr>

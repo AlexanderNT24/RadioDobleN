@@ -107,6 +107,7 @@ public class ControladorIndex {
         }
 
     }
+
     @GetMapping("/historia")
     public String Historia(Model model)
     {

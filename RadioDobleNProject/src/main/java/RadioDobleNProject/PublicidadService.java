@@ -37,10 +37,6 @@ public class PublicidadService implements IPublicidadService {
     public List<Publicidad> BuscarComentarioTipo(String dato) {
         return data.buscarPorTipo(dato);
     }
-    @Override
-    public List<Publicidad> BuscarComentarioIp(String dato) {
-        return data.buscarPorIp(dato);
-    }
 
     @Override
     public List<Publicidad> ListarAs() {
@@ -53,6 +49,6 @@ public class PublicidadService implements IPublicidadService {
     }
     @Override
     public List<Publicidad> Reportar() {
-        return data.reportar();
+        return data.reportarPublicidad();
     }
 }

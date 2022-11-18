@@ -1,5 +1,8 @@
 <div th:insert="layout :: #principal"></div>
-<div class="container text-center">
+
+<div data-aos="zoom-in" class="container text-center">
+    <h2 class="card-header">Nuestros auspiciadores</h2>
+    <div style="width: 10px"></div>
     <div class="row">
         <div class="col" th:each="publicidad,status : ${publicidades}">
             <div>

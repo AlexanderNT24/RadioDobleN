@@ -8,26 +8,21 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IPublicidad extends CrudRepository<Publicidad, Integer> {
-    @Query(value="SELECT * FROM comentario "
-            + "WHERE ip_user LIKE %?1% "
-            + "OR nombre LIKE %?1% "
-            + "OR contenido LIKE %?1%",nativeQuery=true)
+    @Query(value="SELECT * FROM publicidad "
+            + "WHERE id LIKE %?1% "
+            + "OR empresa LIKE %?1% "
+            + "OR lema LIKE %?1%",nativeQuery=true)
     List<Publicidad> buscarPorTodo(String dato);
-    @Query(value="SELECT * FROM comentario "
-            + "WHERE tipo LIKE %?1% ",nativeQuery=true)
+    @Query(value="SELECT * FROM publicidad "
+            + "WHERE empresa LIKE %?1% ",nativeQuery=true)
     List<Publicidad> buscarPorTipo(String dato);
 
-    @Query(value="SELECT * FROM comentario "
-            + "WHERE ip_user LIKE %?1% ",nativeQuery=true)
-    List<Publicidad> buscarPorIp(String dato);
-
-    @Query(value="SELECT * FROM mascota "
+    @Query(value="SELECT * FROM publicidad "
             + "ORDER BY Id ASC; ",nativeQuery=true)
     List<Publicidad> listarAs();
-    @Query(value="SELECT * FROM mascota "
+    @Query(value="SELECT * FROM publicidad "
             + "ORDER BY Id DESC; ",nativeQuery=true)
     List<Publicidad> listarDes();
-    @Query(value="SELECT count(id) as id,'' as nombre,sum(precio) as precio, '' as servicio FROM mascota "
-            ,nativeQuery=true)
-    List<Publicidad> reportar();
+    @Query(value="SELECT count(id) as id, sum(coste) as coste ,'' as empresa, '' as imagen_url,'' as lema FROM publicidad ORDER BY Id DESC;",nativeQuery=true)
+    List<Publicidad> reportarPublicidad();
 }

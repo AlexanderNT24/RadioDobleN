@@ -21,10 +21,10 @@ public interface IComentario extends CrudRepository<Comentario, Integer> {
            + "WHERE ip_user LIKE %?1% ",nativeQuery=true)
    List<Comentario> buscarPorIp(String dato);
 
-   @Query(value="SELECT * FROM mascota "
+   @Query(value="SELECT * FROM comentario "
            + "ORDER BY Id ASC; ",nativeQuery=true)
    List<Comentario> listarAs();
-   @Query(value="SELECT * FROM mascota "
+   @Query(value="SELECT * FROM comentario "
            + "ORDER BY Id DESC; ",nativeQuery=true)
    List<Comentario> listarDes();
    @Query(value="SELECT count(id) as id,'' as nombre,sum(precio) as precio, '' as servicio FROM mascota "

@@ -91,5 +91,20 @@ public class ControladorAdmin {
         }
 
     }
+    @GetMapping("/listarComentarioAs")
+    public String ComentarioAs(Model model)
+    {
+        List<Comentario> comentarios = service.ListarAs();
+        model.addAttribute("comentarios",comentarios);
+        return "admin";
+    }
+    @GetMapping("/listarComentarioDes")
+    public String ComentarioDes(Model model)
+    {
+        List<Comentario> comentarios = service.ListarDes();
+        model.addAttribute("comentarios",comentarios);
+        return "admin";
+    }
+
 
 }

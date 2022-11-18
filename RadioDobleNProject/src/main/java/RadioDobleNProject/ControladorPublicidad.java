@@ -20,6 +20,12 @@ public class ControladorPublicidad{
     {
         List<Publicidad> publicidades = servicePublicidad.Listar();
         model.addAttribute("publicidades",publicidades);
+        try {
+            List<Publicidad> publicidadesReporte = servicePublicidad.Reportar();
+            model.addAttribute("reporte",publicidadesReporte);
+        }catch (Exception exception){
+
+        }
 
 
         return "adminPublicidad";
@@ -59,7 +65,7 @@ public class ControladorPublicidad{
         p.setImagenUrl(imagen);
         servicePublicidad.Guardar(p);
 
-        return "redirect:/admin/tableAdmin";
+        return "redirect:/admin/publicidad";
     }
     @GetMapping("/publicidad")
     public String ListarPublicidad(Model model)
@@ -75,6 +81,21 @@ public class ControladorPublicidad{
     {
         servicePublicidad.Eliminar(id);
         return "redirect:/admin/publicidad";
+    }
+
+    @GetMapping("/listarPublicidadAs")
+    public String PublicidadAs(Model model)
+    {
+        List<Publicidad> publicidad = servicePublicidad.ListarAs();
+        model.addAttribute("publicidades",publicidad);
+        return "adminPublicidad";
+    }
+    @GetMapping("/listarPublicidadDes")
+    public String PublicidadoDes(Model model)
+    {
+        List<Publicidad> publicidad = servicePublicidad.ListarDes();
+        model.addAttribute("publicidades",publicidad);
+        return "adminPublicidad";
     }
 
 }

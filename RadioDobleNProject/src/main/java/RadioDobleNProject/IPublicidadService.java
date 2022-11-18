@@ -11,7 +11,7 @@ public interface IPublicidadService {
     public void Eliminar(int id);
     public List<Publicidad> Buscar(String dato);
     public List<Publicidad>BuscarComentarioTipo(String dato);
-    public List<Publicidad>BuscarComentarioIp(String dato);
+
     public List<Publicidad> ListarAs();
     public List<Publicidad> ListarDes();
     public List<Publicidad> Reportar();
