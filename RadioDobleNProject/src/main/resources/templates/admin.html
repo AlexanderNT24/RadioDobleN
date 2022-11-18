@@ -1,0 +1,306 @@
+<div th:insert="layout :: #principal"></div>
+
+<div id="chat" class="row">
+
+    <script>
+        function modalEdit() {
+            console.log('carga')
+            const exampleModal = document.getElementById("exampleModal1");
+            exampleModal.addEventListener("show.bs.modal", (event) => {
+                const button = event.relatedTarget;
+
+                //const recipient = button.getAttribute('data-bs-whatever')
+                const id = button.getAttribute("data-bs-id");
+
+                const ip = button.getAttribute("data-bs-ip");
+                const nombre = button.getAttribute("data-bs-nombre");
+                const tipo = button.getAttribute("data-bs-tipo");
+                const contenido = button.getAttribute("data-bs-contenido");
+                console.log(ip)
+                console.log(nombre)
+                console.log(tipo)
+                console.log(contenido)
+                //const modalTitle = exampleModal.querySelector('.modal-title')
+                //const modalBodyInput = exampleModal.querySelector('.modal-body input')
+                const campoId = document.getElementById("idModal");
+
+                const campoNombre = document.getElementById("nombreModal");
+                const campoIp = document.getElementById("ipModal");
+                const campoTipo = document.getElementById("tipoModal");
+                const campoContenido = document.getElementById("contenidoModal");
+                //modalTitle.textContent = `New message to ${recipient}`
+                //modalBodyInput.value = recipient
+                campoId.value = id;
+                campoNombre.value = nombre;
+                campoIp.value = ip;
+                campoTipo.value = tipo;
+                campoContenido.value = contenido;
+            });
+        }
+
+        function Eliminar(opcion) {
+            event.preventDefault();
+            Swal.fire({
+                title: "Deseas Eliminar?",
+                text: "Una vez Eliminado no se podra recuperar!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, Eliminar!",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Eliminado!",
+                        text: "Comentario eliminado del registro.",
+                        icon: "success",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = opcion.href;
+                        }
+                    });
+                }
+            });
+        }
+        function Actualizar() {
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Quieres modificar este registro?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Guardar",
+                denyButtonText: `No guardar`,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Guardado!",
+                        text: "",
+                        icon: "success",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const formulario = document.getElementById("actualizar");
+                            formulario.submit();
+                        }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire("El registro no se actualizará", "", "info");
+                }
+            });
+        }
+        const URL_API = "https://api.ipify.org/?format=json";
+        fetch(URL_API)
+            .then((respuestaRaw) => respuestaRaw.json())
+            .then((respuesta) => {
+                document.getElementById("ip").value = respuesta.ip;
+                document.getElementById("ipBus").value = respuesta.ip;
+            });
+    </script>
+
+    <body onload="modalEdit()">
+    <center>
+        <div class="overflow" style="overflow-y: scroll">
+            <div class="col" id="mensajes">
+                <div class="card">
+                    <h5 class="card-header">Mensajes En Linea</h5>
+                    <nav class="navbar navbar-expand-lg bg-light">
+                        <div class="container-fluid">
+                            <button
+                                    class="navbar-toggler"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navbarSupportedContent"
+                                    aria-controls="navbarSupportedContent"
+                                    aria-expanded="false"
+                                    aria-label="Toggle navigation"
+                            >
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div
+                                    class="collapse navbar-collapse"
+                                    id="navbarSupportedContent"
+                            >
+
+
+
+                                <form action="admin/buscarComentarioTipo" method="POST" id="filtro" class="d-flex" role="search">
+                                    <select onchange="document.getElementById('filtro').submit()" name="dato" id="tipo" class="form-control search">
+                                        <option value="" disabled="disabled" selected="selected">
+                                            Filtro
+                                        </option>
+                                        <option value="Saludos">Saludos</option>
+                                        <option value="Comentario">Comentario</option>
+                                        <option value="Pregunta">Pregunta</option>
+                                    </select>
+                                </form>
+                                <form action="admin/buscarComentario" method="POST" id="busqueda" class="d-flex" role="search">
+                                    <input
+                                            id="valor",
+                                            name="dato"
+                                            class="form-control search"
+                                            type="search"
+                                            placeholder="Descripcion"
+                                            aria-label="Buscar"
+                                    />
+                                    <button
+                                            class="btn btn-success"
+                                            type="submit"
+                                    >
+                                        Buscar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div
+                            class="card-body msg_card_body"
+                            style="
+                height: 480px;
+                overflow-y: scroll;
+                border-radius: 15px !important;
+                background-color: rgba(0, 0, 0, 0.4) !important;
+              "
+                    >
+                    <div style="overflow-y: scroll;">
+                        <table class="table" style=" background-color: rgba(210,130,240, 0.3) !important; color: white;">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Ip</th>
+                                <th scope="col">Contenido</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Opciones</th>
+                            </tr>
+                            <tbody th:each="comentario,status : ${comentarios}">
+                            <tr>
+                                <th th:text="${comentario.id}"></th>
+                                <th th:text="${comentario.nombre}"></th>
+                                <th th:text="${comentario.ipUser}"></th>
+                                <td th:text="${comentario.contenido}" ></td>
+                                <td th:text="${comentario.tipo}"></td>
+                                <td>                          <a
+                                        onclick="return Eliminar(this)"
+                                        th:href="@{/admin/eliminarComentario(id=${comentario.id})}"
+                                        class="btn btn-danger"
+                                >
+                                    <i class="bx bx-trash"></i>
+                                </a>
+                                    <button
+                                            type="button"
+                                            class="btn btn-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal1"
+                                            th:attr="data-bs-id=${comentario.id},data-bs-ip=${comentario.ipUser},data-bs-tipo=${comentario.tipo},data-bs-nombre=${comentario.nombre},data-bs-contenido=${comentario.contenido}"
+                                    >
+                                        <i class='bx bx-upvote'></i>
+                                    </button></td>
+                            </tr>
+                            </tbody>
+                            </thead>
+                        </table>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+
+    <!-- MODAL -->
+    <div
+            class="modal fade"
+            id="exampleModal1"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel1"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">
+                        <i class="bi bi-file-earmark-arrow-up-fill"></i
+                        ><b> Editar Comentario </b> <i class="bi bi-menu-up"></i>
+                    </h5>
+                    <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                </div>
+                <form action="admin/editarComentario" method="POST" id="actualizar">
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="idModal" required="required" />
+                        <input name="ip" id="ipModal" required="required" type="hidden"/>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label"
+                            ><b>Tipo: </b></label
+                            >
+                            <select class="form-control"
+                                    name="tipo"
+                                    id="tipoModal"
+                                    required="required">
+                                <option value="Saludos">Saludos</option>
+                                <option value="Comentario">Comentario</option>
+                                <option value="Pregunta">Pregunta</option>
+                            </select>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label"
+                            ><b>Nombre: </b></label
+                            >
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    name="nombre"
+                                    id="nombreModal"
+                                    required="required"
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label"
+                            ><b>Contenido: </b></label
+                            >
+                            <textarea
+                                    type="number"
+                                    class="form-control"
+                                    name="contenido"
+                                    id="contenidoModal"
+                                    required="required"
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-outline-dark"
+                                data-bs-dismiss="modal"
+                        >
+                            <i class="bi bi-unlock-fill"></i><b> Cerrar</b>
+                        </button>
+                        <button
+                                onclick="return Actualizar()"
+                                class="btn btn-outline-danger"
+                        >
+                            <i class="bi bi-arrow-up-right-square-fill"></i
+                            ><b> Actualizar</b>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+</div>

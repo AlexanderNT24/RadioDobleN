@@ -2,45 +2,39 @@
 package RadioDobleNProject;
 
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class Controlador {
+public class ControladorAdmin {
     @Autowired
     private IComentarioService service;
-     
-    @GetMapping("/")
-    public String Index(Model model)
+
+    @GetMapping("/admin")
+    public String IndexAdmin(Model model)
+    {
+        return "signInAdmin";
+    }
+    @PostMapping ("/admin")
+    public String LogAdmin(Model model)
     {
         List<Comentario> comentarios = service.Listar();
         model.addAttribute("comentarios",comentarios);
 
-        return "index";
+        return "admin";
     }
-    @PostMapping("/")
-    public String RegistrarComentario(@RequestParam("ip") String ip,
-                                      @RequestParam("tipo") String tipo,
-                                      @RequestParam("nombre") String nombre,
-                                      @RequestParam("contenido") String contenido)
+
+    @GetMapping("/admin/tableAdmin")
+    public String IndexAdminTable(Model model)
     {
-        Comentario c=new Comentario();
-        c.setIpUser(ip);
-        c.setTipo(tipo);
-        c.setNombre(nombre);
-        c.setContenido(contenido);
-
-        service.Guardar(c);
-
-        return "redirect:/";
+        return "admin";
     }
-    @PostMapping("/editarComentario")
+    @PostMapping("/admin/editarComentario")
     public String ActualizarComentario(@RequestParam("id") int id,
                                        @RequestParam("ip") String ip,
                                        @RequestParam("tipo") String tipo,
@@ -56,31 +50,16 @@ public class Controlador {
         c.setContenido(contenido);
         service.Guardar(c);
 
-        return "redirect:/";
+        return "redirect:/admin";
     }
-    @GetMapping("/eliminarComentario")
+    @GetMapping("/admin/eliminarComentario")
     public String EliminarComentario(@RequestParam("id") int id)
     {
         service.Eliminar(id);
-        return "redirect:/";
+        return "redirect:/admin";
     }
-    @PostMapping("/buscarComentario")
-    public String BuscarComentario(@RequestParam("dato") String dato, Model model)
-    {
-        try {
-            System.out.println(dato);
-            List<Comentario> comentarios = service.Buscar(dato);
-            model.addAttribute("comentarios",comentarios);
-            return "index";
-
-        } catch (Exception e) {
-            return "index";
-
-        }
-
-    }
-    @PostMapping("/buscarComentarioTipo")
-    public String BuscarComentarioTipo(@RequestParam("dato") String dato, Model model)
+    @PostMapping("/admin/buscarComentarioTipo")
+    public String BuscarComentarioTipoAdmin(@RequestParam("dato") String dato, Model model)
     {
         try {
             System.out.println(dato);
@@ -94,8 +73,8 @@ public class Controlador {
         }
 
     }
-    @PostMapping("/buscarComentarioIp")
-    public String BuscarComentarioIp(@RequestParam("dato") String dato, Model model)
+    @PostMapping("/admin/buscarComentarioIp")
+    public String BuscarComentarioIpAdmin(@RequestParam("dato") String dato, Model model)
     {
         try {
             System.out.println(dato);
@@ -109,5 +88,4 @@ public class Controlador {
         }
 
     }
-
 }
