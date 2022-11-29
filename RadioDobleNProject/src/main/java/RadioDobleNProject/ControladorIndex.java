@@ -38,7 +38,7 @@ public class ControladorIndex {
     public String RegistrarComentario(@RequestParam("ip") String ip,
                                       @RequestParam("tipo") String tipo,
                                       @RequestParam("nombre") String nombre,
-                                      @RequestParam("contenido") String contenido)
+                                      @RequestParam("contenido") String contenido,Model model)
     {
         if(!validateComment(contenido)){
             Comentario c=new Comentario();
@@ -50,7 +50,10 @@ public class ControladorIndex {
             service.Guardar(c);
             return "redirect:/";
         }
-        return "redirect:/";
+        List<Comentario> comentarios = service.Listar();
+        model.addAttribute("comentarios",comentarios);
+        model.addAttribute("vulgaridad","True");
+        return "index";
 
 
     }
