@@ -6,16 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ConexionBD_3521" />
+        <module name="RadioDobleNProject" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ConexionBD_3521" target="17" />
+      <module name="RadioDobleNProject" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ConexionBD_3521" options="-parameters" />
+      <module name="RadioDobleNProject" options="-parameters" />
     </option>
   </component>
 </project>

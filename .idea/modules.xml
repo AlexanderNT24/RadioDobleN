@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RadioDobleNProject/ConexionBD_3521.iml" filepath="$PROJECT_DIR$/RadioDobleNProject/ConexionBD_3521.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/RadioDobleN.iml" filepath="$PROJECT_DIR$/.idea/RadioDobleN.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RadioDobleNProject/RadioDobleNProject.iml" filepath="$PROJECT_DIR$/RadioDobleNProject/RadioDobleNProject.iml" />
     </modules>
   </component>
 </project>
