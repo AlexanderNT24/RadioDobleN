@@ -50,7 +50,7 @@ public class ControladorIndex {
             service.Guardar(c);
             return "redirect:/";
         }
-        List<Comentario> comentarios = service.Listar();
+        List<Comentario> comentarios = service.ListarDes();
         model.addAttribute("comentarios",comentarios);
         model.addAttribute("vulgaridad","True");
         return "index";

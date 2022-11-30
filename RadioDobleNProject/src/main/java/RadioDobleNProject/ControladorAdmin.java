@@ -18,15 +18,20 @@ public class ControladorAdmin {
     @GetMapping("/admin")
     public String IndexAdmin(Model model)
     {
+
         return "signInAdmin";
     }
     @PostMapping ("/admin")
-    public String LogAdmin(Model model)
+    public String LogAdmin(@RequestParam("user") String user,
+                           @RequestParam("password") String password,Model model)
     {
         List<Comentario> comentarios = service.Listar();
         model.addAttribute("comentarios",comentarios);
-
-        return "redirect:/admin/tableAdmin";
+        if(user.equals("user_admin@hotmail.com"))
+            if(password.equals("user12345"))
+                return "redirect:/admin/tableAdmin";
+        model.addAttribute("errorPass","Usuario o contraseña invalido");
+        return "signInAdmin";
     }
 
     @GetMapping("/admin/tableAdmin")

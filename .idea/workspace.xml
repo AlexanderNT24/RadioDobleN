@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e4c0e640-b3d0-4c7e-b9b8-ae5b5aced652" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/java/RadioDobleNProject/ControladorAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/java/RadioDobleNProject/ControladorAdmin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/adminPublicidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/adminPublicidad.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/signInAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/signInAdmin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1669731335167</updated>
       <workItem from="1669731338010" duration="7446000" />
-      <workItem from="1669820677941" duration="12253000" />
+      <workItem from="1669820677941" duration="13809000" />
     </task>
     <servers />
   </component>
