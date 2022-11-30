@@ -34,7 +34,8 @@ public class ControladorAdmin {
     {
         List<Comentario> comentarios = service.Listar();
         model.addAttribute("comentarios",comentarios);
-
+        List<Comentario> comentarioIP = service.Reportar();
+        model.addAttribute("comentarioIP",comentarioIP);
         return "admin";
     }
     @PostMapping("/admin/editarComentario")
@@ -68,6 +69,8 @@ public class ControladorAdmin {
             System.out.println(dato);
             List<Comentario> comentarios = service.BuscarComentarioTipo(dato);
             model.addAttribute("comentarios",comentarios);
+            List<Comentario> comentarioIP = service.Reportar();
+            model.addAttribute("comentarioIP",comentarioIP);
             return "admin";
 
         } catch (Exception e) {
@@ -83,6 +86,8 @@ public class ControladorAdmin {
             System.out.println(dato);
             List<Comentario> comentarios = service.Buscar(dato);
             model.addAttribute("comentarios",comentarios);
+            List<Comentario> comentarioIP = service.Reportar();
+            model.addAttribute("comentarioIP",comentarioIP);
             return "admin";
 
         } catch (Exception e) {
@@ -96,6 +101,8 @@ public class ControladorAdmin {
     {
         List<Comentario> comentarios = service.ListarAs();
         model.addAttribute("comentarios",comentarios);
+        List<Comentario> comentarioIP = service.Reportar();
+        model.addAttribute("comentarioIP",comentarioIP);
         return "admin";
     }
     @GetMapping("/listarComentarioDes")
@@ -103,6 +110,8 @@ public class ControladorAdmin {
     {
         List<Comentario> comentarios = service.ListarDes();
         model.addAttribute("comentarios",comentarios);
+        List<Comentario> comentarioIP = service.Reportar();
+        model.addAttribute("comentarioIP",comentarioIP);
         return "admin";
     }
 

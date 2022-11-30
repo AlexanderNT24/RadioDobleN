@@ -103,127 +103,175 @@
                 }
             });
         }
-        const URL_API = "https://api.ipify.org/?format=json";
-        fetch(URL_API)
-            .then((respuestaRaw) => respuestaRaw.json())
-            .then((respuesta) => {
-                document.getElementById("ip").value = respuesta.ip;
-                document.getElementById("ipBus").value = respuesta.ip;
-            });
+
     </script>
+<script th:inline="javascript">
 
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var comentarios = [[${comentarioIP}]];
+        var size = Object.keys(comentarios).length;
+
+        var dataArray=[];
+
+        var Header= ['IP', 'Mensajes', { role: 'style' }];
+
+        dataArray.push(Header);
+
+        for (var i = 0; i < size; i++) {
+            var temp=[];
+            temp.push(comentarios[i].ipUser);
+            temp.push(comentarios[i].id);
+            temp.push("blue");
+            dataArray.push(temp);
+        }
+        console.log(dataArray)
+
+
+        var data = google.visualization.arrayToDataTable(dataArray);
+
+        var options = {
+            legend: 'none',
+            backgroundColor: {
+                'fill': 'transparent',
+            },
+
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('myChart'));
+        chart.draw(data, options);
+    }
+</script>
     <body onload="modalEdit()">
+
     <center>
+
         <div class="overflow" style="overflow-y: scroll">
-            <div class="col" id="mensajes">
-                <div class="card">
-                    <h5 class="card-header">Gestión de mensajes</h5>
-                    <nav class="navbar navbar-expand-lg bg-light">
-                        <div>
-                            <a class="btn btn-info" th:href="@{/listarComentarioAs}" type="submit">↑</a>
-                            <a class="btn btn-warning" th:href="@{/listarComentarioDes}" type="submit">↓</a>
-                        </div>
-                        <div class="container-fluid">
-                            <button
-                                    class="navbar-toggler"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navbarSupportedContent"
-                                    aria-controls="navbarSupportedContent"
-                                    aria-expanded="false"
-                                    aria-label="Toggle navigation"
-                            >
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div
-                                    class="collapse navbar-collapse"
-                                    id="navbarSupportedContent"
-                            >
+            <div class="container text-center">
+                <h5 class="card-header">Gestión de mensajes</h5>
 
+                <div class="row">
+                    <div class="col" id="mensajes">
+                        <div class="card">
 
-
-                                <form action="buscarComentarioTipo" method="POST" id="filtro" class="d-flex" role="search">
-                                    <select onchange="document.getElementById('filtro').submit()" name="dato" id="tipo" class="form-control search">
-                                        <option value="" disabled="disabled" selected="selected">
-                                            Filtro
-                                        </option>
-                                        <option value="Saludos">Saludos</option>
-                                        <option value="Comentario">Comentario</option>
-                                        <option value="Pregunta">Pregunta</option>
-                                    </select>
-                                </form>
-                                <form action="buscarComentario" method="POST" id="busqueda" class="d-flex" role="search">
-                                    <input
-                                            id="valor",
-                                            name="dato"
-                                            class="form-control search"
-                                            type="search"
-                                            placeholder="Descripcion"
-                                            aria-label="Buscar"
-                                    />
+                            <nav class="navbar navbar-expand-lg bg-light">
+                                <div>
+                                    <a class="btn btn-info" th:href="@{/listarComentarioAs}" type="submit">↑</a>
+                                    <a class="btn btn-warning" th:href="@{/listarComentarioDes}" type="submit">↓</a>
+                                </div>
+                                <div class="container-fluid">
                                     <button
-                                            class="btn btn-success"
-                                            type="submit"
+                                            class="navbar-toggler"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#navbarSupportedContent"
+                                            aria-controls="navbarSupportedContent"
+                                            aria-expanded="false"
+                                            aria-label="Toggle navigation"
                                     >
-                                        Buscar
+                                        <span class="navbar-toggler-icon"></span>
                                     </button>
-                                </form>
-                            </div>
-                        </div>
-                    </nav>
+                                    <div
+                                            class="collapse navbar-collapse"
+                                            id="navbarSupportedContent"
+                                    >
 
-                    <div
-                            class="card-body msg_card_body"
-                            style="
+
+
+                                        <form action="buscarComentarioTipo" method="POST" id="filtro" class="d-flex" role="search">
+                                            <select onchange="document.getElementById('filtro').submit()" name="dato" id="tipo" class="form-control search">
+                                                <option value="" disabled="disabled" selected="selected">
+                                                    Filtro
+                                                </option>
+                                                <option value="Saludos">Saludos</option>
+                                                <option value="Comentario">Comentario</option>
+                                                <option value="Pregunta">Pregunta</option>
+                                            </select>
+                                        </form>
+                                        <form action="buscarComentario" method="POST" id="busqueda" class="d-flex" role="search">
+                                            <input
+                                                    id="valor",
+                                                    name="dato"
+                                                    class="form-control search"
+                                                    type="search"
+                                                    placeholder="Descripcion"
+                                                    aria-label="Buscar"
+                                            />
+                                            <button
+                                                    class="btn btn-success"
+                                                    type="submit"
+                                            >
+                                                Buscar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </nav>
+
+                            <div
+                                    class="card-body msg_card_body"
+                                    style="
                 height: 480px;
                 overflow-y: scroll;
                 border-radius: 15px !important;
-                background-color: rgba(0, 0, 0, 0.4) !important;
+                background-color: rgba(0, 0, 0, 0.4) !important; resize: both; overflow: auto
               "
-                    >
-                    <div style="overflow-y: scroll;">
-                        <table class="table" style=" background-color: rgba(210,130,240, 0.3) !important; color: white;">
-                            <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Ip</th>
-                                <th scope="col">Contenido</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Opciones</th>
-                            </tr>
-                            <tbody th:each="comentario,status : ${comentarios}">
-                            <tr>
-                                <th th:text="${comentario.id}"></th>
-                                <th th:text="${comentario.nombre}"></th>
-                                <th th:text="${comentario.ipUser}"></th>
-                                <td th:text="${comentario.contenido}" ></td>
-                                <td th:text="${comentario.tipo}"></td>
-                                <td>                          <a
-                                        onclick="return Eliminar(this)"
-                                        th:href="@{/admin/eliminarComentario(id=${comentario.id})}"
-                                        class="btn btn-danger"
-                                >
-                                    <i class="bx bx-trash"></i>
-                                </a>
-                                    <button
-                                            type="button"
-                                            class="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal1"
-                                            th:attr="data-bs-id=${comentario.id},data-bs-ip=${comentario.ipUser},data-bs-tipo=${comentario.tipo},data-bs-nombre=${comentario.nombre},data-bs-contenido=${comentario.contenido}"
-                                    >
-                                        <i class='bx bx-upvote'></i>
-                                    </button></td>
-                            </tr>
-                            </tbody>
-                            </thead>
-                        </table>
+                            >
+                                <div style="overflow-y: scroll;" >
+                                    <table class="table" style=" background-color: rgba(210,130,240, 0.3) !important; color: white;">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Ip</th>
+                                            <th scope="col">Contenido</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Opciones</th>
+                                        </tr>
+                                        <tbody th:each="comentario,status : ${comentarios}">
+                                        <tr>
+                                            <th th:text="${comentario.id}"></th>
+                                            <th th:text="${comentario.nombre}"></th>
+                                            <th th:text="${comentario.ipUser}"></th>
+                                            <td th:text="${comentario.contenido}" ></td>
+                                            <td th:text="${comentario.tipo}"></td>
+                                            <td>                          <a
+                                                    onclick="return Eliminar(this)"
+                                                    th:href="@{/admin/eliminarComentario(id=${comentario.id})}"
+                                                    class="btn btn-danger"
+                                            >
+                                                <i class="bx bx-trash"></i>
+                                            </a>
+                                                <button
+                                                        type="button"
+                                                        class="btn btn-primary"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal1"
+                                                        th:attr="data-bs-id=${comentario.id},data-bs-ip=${comentario.ipUser},data-bs-tipo=${comentario.tipo},data-bs-nombre=${comentario.nombre},data-bs-contenido=${comentario.contenido}"
+                                                >
+                                                    <i class='bx bx-upvote'></i>
+                                                </button></td>
+                                        </tr>
+                                        </tbody>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
+                    <div class="col">
+                        <div id="myChart" style="width:100%; max-width:600px; height:500px;"></div>
 
                     </div>
                 </div>
             </div>
+
+
+
         </div>
     </center>
 

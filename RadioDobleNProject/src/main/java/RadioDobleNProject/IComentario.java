@@ -27,7 +27,7 @@ public interface IComentario extends CrudRepository<Comentario, Integer> {
    @Query(value="SELECT * FROM comentario "
            + "ORDER BY Id DESC; ",nativeQuery=true)
    List<Comentario> listarDes();
-   @Query(value="SELECT count(id) as id,'' as nombre,sum(precio) as precio, '' as servicio FROM mascota "
+   @Query(value="SELECT COUNT(id) AS id,'' AS contenido, ip_user, '' AS nombre,'' as tipo FROM `comentario` GROUP BY ip_user; "
            ,nativeQuery=true)
    List<Comentario> reportar();
 }

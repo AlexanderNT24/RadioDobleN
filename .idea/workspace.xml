@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e4c0e640-b3d0-4c7e-b9b8-ae5b5aced652" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/vulgaridad.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/java/RadioDobleNProject/ControladorIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/java/RadioDobleNProject/ControladorIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/java/RadioDobleNProject/ControladorAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/java/RadioDobleNProject/ControladorAdmin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/java/RadioDobleNProject/IComentario.java" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/java/RadioDobleNProject/IComentario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/adminPublicidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/adminPublicidad.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/RadioDobleNProject/src/main/resources/templates/layout.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +56,8 @@
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "node.js.selected.package.tslint": "(autodetect)",
+    "spring.configuration.checksum": "ef021239f52a32a8bfb15594a56c48d9"
   }
 }]]></component>
   <component name="RunManager">
@@ -74,7 +77,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1669731335167</updated>
-      <workItem from="1669731338010" duration="5515000" />
+      <workItem from="1669731338010" duration="7446000" />
+      <workItem from="1669820677941" duration="10172000" />
     </task>
     <servers />
   </component>

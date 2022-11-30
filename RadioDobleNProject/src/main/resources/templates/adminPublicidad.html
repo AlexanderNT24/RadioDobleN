@@ -99,89 +99,143 @@
     }
 
 </script>
+<script th:inline="javascript">
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var comentarios = [[${publicidades}]];
+        var size = Object.keys(comentarios).length;
+
+        var dataArray=[];
+
+        var Header= ['Empresa', 'Coste', { role: 'style' }];
+
+        dataArray.push(Header);
+
+        for (var i = 0; i < size; i++) {
+            var temp=[];
+            temp.push(comentarios[i].empresa);
+            temp.push(comentarios[i].coste);
+            temp.push("blue");
+            dataArray.push(temp);
+        }
+        console.log(dataArray)
+
+
+        var data = google.visualization.arrayToDataTable(dataArray);
+
+        var options = {
+            legend: 'none',
+            backgroundColor: {
+                'fill': 'transparent',
+            },
+            is3D: true
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('myChart'));
+        chart.draw(data, options);
+    }
+</script>
+
 
 <body onload="modalEdit()">
+    <div class="container text-center">
+        <h5 class="card-header">Gestión publicitaria</h5>
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg bg-light">
+                    <div class="container-fluid">
+                        <div>
+                            <a class="btn btn-info" th:href="@{/listarPublicidadAs}" type="submit">↑</a>
+                            <a class="btn btn-warning" th:href="@{/listarPublicidadDes}" type="submit">↓</a>
+                        </div>
+                        <button
+                                class="navbar-toggler"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation"
+                        >
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Registrar
+                        </button>
+                    </div>
+                </nav>
+                <div style="resize: both; overflow: auto">
+                    <table class="table" style=" background-color: rgba(210,130,240, 0.3) !important; color: white;" >
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Empresa</th>
+                            <th scope="col">Lema</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Coste</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                        <tbody>
+                        <div th:each="publicidad,status : ${publicidades}">
+                            <tr>
+                                <th th:text="${publicidad.id}"></th>
+                                <th th:text="${publicidad.empresa}"></th>
+                                <th th:text="${publicidad.lema}"></th>
+                                <td hidden th:text="${publicidad.imagenUrl}" ></td>
+                                <td th:text="${publicidad.coste}"></td>
+                                <td>
+                                    <a onclick="return Eliminar(this)" th:href="@{/admin/eliminarPublicidad(id=${publicidad.id})}" class="btn btn-danger">
+                                        <i class="bx bx-trash"></i></a>
+                                    <button
+                                            type="button"
+                                            class="btn btn-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal1"
+                                            th:attr="data-bs-id=${publicidad.id},data-bs-empresa=${publicidad.empresa},data-bs-lema=${publicidad.lema},data-bs-imagenUrl=${publicidad.imagenUrl},data-bs-coste=${publicidad.coste}"
+                                    >
+                                        <i class='bx bx-upvote'></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </div>
 
 
-<div class="container">
-    <h5 class="card-header">Gestión publicitaria</h5>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <div>
-                <a class="btn btn-info" th:href="@{/listarPublicidadAs}" type="submit">↑</a>
-                <a class="btn btn-warning" th:href="@{/listarPublicidadDes}" type="submit">↓</a>
-            </div>
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Registrar
-            </button>
-        </div>
-    </nav>
-    <div style="overflow-y: scroll;">
-        <table class="table" style=" background-color: rgba(210,130,240, 0.3) !important; color: white;">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Empresa</th>
-                <th scope="col">Lema</th>
-                <th scope="col">Imagen</th>
-                <th scope="col">Coste</th>
-                <th scope="col">Opciones</th>
-            </tr>
-            <tbody>
-        <div th:each="publicidad,status : ${publicidades}">
-            <tr>
-                <th th:text="${publicidad.id}"></th>
-                <th th:text="${publicidad.empresa}"></th>
-                <th th:text="${publicidad.lema}"></th>
-                <td th:text="${publicidad.imagenUrl}" ></td>
-                <td th:text="${publicidad.coste}"></td>
-                <td>
-                    <a onclick="return Eliminar(this)" th:href="@{/admin/eliminarPublicidad(id=${publicidad.id})}" class="btn btn-danger">
-                        <i class="bx bx-trash"></i></a>
-                    <button
-                            type="button"
-                            class="btn btn-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#exampleModal1"
-                            th:attr="data-bs-id=${publicidad.id},data-bs-empresa=${publicidad.empresa},data-bs-lema=${publicidad.lema},data-bs-imagenUrl=${publicidad.imagenUrl},data-bs-coste=${publicidad.coste}"
-                    >
-                        <i class='bx bx-upvote'></i>
-                    </button>
-                </td>
-            </tr>
-        </div>
+                        </tbody>
+                        <tr>
+                            <div th:each="publicidades,status : ${reporte}">
+                                <th>Total:</th>
+                                <th th:text="${publicidades.id}"></th>
+                                <th></th>
+                                <th></th>
+                                <th th:text="${publicidades.coste}"></th>
+                                <th></th>
+
+                            </div>
 
 
-            </tbody>
-            <tr>
-                <div th:each="publicidades,status : ${reporte}">
-                    <th>Total:</th>
-                    <th th:text="${publicidades.id}"></th>
-                    <th></th>
-                    <th></th>
-                    <th th:text="${publicidades.coste}"></th>
-                    <th></th>
-
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
 
 
-            </tr>
-            </thead>
-        </table>
+            </div>
+            <div class="col">
+                <div id="myChart" style="width:100%; max-width:600px; height:500px;"></div>
+
+            </div>
+        </div>
+
     </div>
-</div>
+
+
+
+
 
 
 <!-- MODAL -->
