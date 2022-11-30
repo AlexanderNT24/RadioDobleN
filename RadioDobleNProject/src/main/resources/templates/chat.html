@@ -64,7 +64,8 @@
               </div>
             </nav>
 
-            <div class="card-body msg_card_body" style="height: 480px;overflow-y: scroll;border-radius: 15px !important;background-color: rgba(0, 0, 0, 0.4) !important;">
+            <div class="card-body msg_card_body" style="  display: flex;
+  flex-direction: column-reverse; height: 480px;overflow-y: scroll;border-radius: 15px !important;background-color: rgba(0, 0, 0, 0.4) !important;">
               <div th:each="comentario,status : ${comentarios}">
                 <div class="d-flex justify-content-start mb-4">
                   <div class="img_cont_msg">

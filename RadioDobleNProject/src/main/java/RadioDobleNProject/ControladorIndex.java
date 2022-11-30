@@ -29,7 +29,7 @@ public class ControladorIndex {
     @GetMapping("/")
     public String Index(Model model)
     {
-        List<Comentario> comentarios = service.Listar();
+        List<Comentario> comentarios = service.ListarDes();
         model.addAttribute("comentarios",comentarios);
 
         return "index";
